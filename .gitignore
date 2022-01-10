@@ -1,0 +1,11 @@
+# skip all fiels
+
+
+# Except not these
+!*/
+*/*
+!*/lib
+!*/design
+!*/assets
+!*/pubspec.yaml
+!*/credits.md
