@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:real_estate_ui/screens/DetailPage.dart';
+import 'DetailPage.dart';
 import '../custom/BorderIcon.dart';
 import '../custom/OptionButton.dart';
 import '../sample_data.dart';
