@@ -20,99 +20,91 @@ class ProductPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: LayoutBuilder(builder: (context, constraints) {
+          // This Stack is to add the add to cart button
           return Stack(children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      height: constraints.maxHeight * 0.40,
-                      color: Colors.green[50],
-                    ),
-                    // This Container is necessary for SinglChildScrollView to work
-                    Container(
-                      height: constraints.maxHeight * 0.6,
-                      // color: Colors.amberAccent,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            addVerticalSpace(70),
-                            Padding(
-                              padding: commonHorizontalPadding,
-                              child: mainText(textTheme),
-                            ),
-                            addVerticalSpace(commonSpacingValue),
-                            const Padding(
-                              padding: commonHorizontalPadding,
-                              child: Divider(
-                                thickness: 1.1,
-                              ),
-                            ),
-                            addVerticalSpace(commonSpacingValue),
-                            Padding(
-                              padding: commonHorizontalPadding,
-                              child: descriptionButtons(textTheme),
-                            ),
-                            addVerticalSpace(commonSpacingValue),
-                            const Padding(
-                              padding: commonHorizontalPadding,
-                              child: Divider(
-                                thickness: 1.1,
-                              ),
-                            ),
-                            addVerticalSpace(commonSpacingValue / 4),
-                            Padding(
-                              padding: commonHorizontalPadding,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Overview",
-                                    style: textTheme.headline5,
-                                  ),
-                                  Text(
-                                    itemData["description"],
-                                    textAlign: TextAlign.justify,
-                                    style: textTheme.bodyText1,
-                                  )
-                                ],
-                              ),
-                            ),
-                            addVerticalSpace(100)
-                          ],
+            // SingleChildScrollView as the layout overflows
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  // This Stack is for green box, image of food on it, back button and heart icon
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        height: constraints.maxHeight * 0.40,
+                        color: Colors.green[50],
+                      ),
+                      Positioned(
+                        top: 20,
+                        left: 20,
+                        child: SquareIconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icons.arrow_back_ios_outlined,
+                          buttonColor: Colors.orange[100] as Color,
+                          iconColor: Colors.orange,
+                          width: 50,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  top: 20,
-                  left: 20,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: SquareIconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: Icons.arrow_back_ios_outlined,
-                      buttonColor: Colors.orange[100] as Color,
-                      iconColor: Colors.orange,
+                      Positioned(
+                        height: constraints.maxHeight * 0.40,
+                        width: constraints.maxWidth,
+                        child: Center(
+                          child: Image.asset(
+                              "assets/images/${itemData['image']}",
+                              height: constraints.maxHeight * 0.25),
+                        ),
+                      ),
+                      heartButton(constraints),
+                    ],
+                  ),
+                  // This Container is necessary for SinglChildScrollView to work
+                  addVerticalSpace(70),
+                  Padding(
+                    padding: commonHorizontalPadding,
+                    child: mainText(textTheme),
+                  ),
+                  addVerticalSpace(commonSpacingValue),
+                  const Padding(
+                    padding: commonHorizontalPadding,
+                    child: Divider(
+                      thickness: 1.1,
                     ),
                   ),
-                ),
-                Positioned(
-                  height: constraints.maxHeight * 0.40,
-                  width: constraints.maxWidth,
-                  child: Center(
-                    child: Image.asset("assets/images/${itemData['image']}",
-                        height: constraints.maxHeight * 0.25),
+                  addVerticalSpace(commonSpacingValue),
+                  Padding(
+                    padding: commonHorizontalPadding,
+                    child: descriptionButtons(textTheme),
                   ),
-                ),
-                heartButton(constraints),
-              ],
+                  addVerticalSpace(commonSpacingValue),
+                  const Padding(
+                    padding: commonHorizontalPadding,
+                    child: Divider(
+                      thickness: 1.1,
+                    ),
+                  ),
+                  addVerticalSpace(commonSpacingValue / 4),
+                  Padding(
+                    padding: commonHorizontalPadding,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Overview",
+                          style: textTheme.headline5,
+                        ),
+                        Text(
+                          itemData["description"],
+                          textAlign: TextAlign.justify,
+                          style: textTheme.bodyText1,
+                        )
+                      ],
+                    ),
+                  ),
+                  addVerticalSpace(100),
+                ],
+              ),
             ),
             slideToAddButton(constraints)
           ]);
@@ -222,6 +214,7 @@ class ProductPage extends StatelessWidget {
   }
 
   Positioned heartButton(BoxConstraints constraints) {
+    // TODO: An empty space exists between heart button and its shadow
     return Positioned(
       top: constraints.maxHeight * 0.40 - 25,
       right: 25,
@@ -236,7 +229,7 @@ class ProductPage extends StatelessWidget {
                 color: Colors.red[100] as Color,
                 spreadRadius: 5,
                 blurRadius: 10,
-                // offset: Offset(0, 7), // changes position of shadow
+                // offset: Offset(1, 1), // changes position of shadow
               ),
             ]),
         child: const Icon(
